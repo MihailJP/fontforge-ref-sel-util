@@ -1,5 +1,5 @@
-Fontforge plugin template
-=========================
+Fontforge Utility Plugin on References and Selections
+=====================================================
 
 Description here
 
@@ -7,7 +7,7 @@ Install
 -------
 
 ```shell
-pip3 install fontforge_hello
+pip3 install fontforge_refsel
 ```
 
 Usage
