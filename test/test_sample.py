@@ -18,3 +18,7 @@
 #          hello(data, font[glyphname])
 #      finally:
 #          font.close()
+
+
+def test_dummy():
+    pass
