@@ -20,6 +20,24 @@ def _selectedGlyphs(font: fontforge.font, allGlyphs: bool = False):
 		return font.glyphs()
 
 
+def glyphHasNestedRefs(glyph: fontforge.glyph) -> bool:
+	"""
+	Checks if glyph has nested references
+	
+	:param glyph: Fontforge glyph object
+	:type glyph: fontforge.glyph
+	:return: ``True`` if at least one reference is nested
+	:rtype: bool
+	"""
+	font = glyph.font
+	for glyph in font.glyphs():
+		for ref in glyph.references:
+			(srcglyph, _, _) = ref
+			if len(font[srcglyph].references) > 0:
+				return True
+	return False
+
+
 def selectGlyphsWithNestedRefs(font: fontforge.font, moreless: Real = 0):
 	"""
 	Selects glyphs with nested references
@@ -32,10 +50,8 @@ def selectGlyphsWithNestedRefs(font: fontforge.font, moreless: Real = 0):
 	"""
 	glyphsWithNestedRefs = set()
 	for glyph in font.glyphs():
-		for ref in glyph.references:
-			(srcglyph, matrix, _) = ref
-			if len(font[srcglyph].references) > 0:
-				glyphsWithNestedRefs.add(glyph.glyphname)
+		if glyphHasNestedRefs(glyph):
+			glyphsWithNestedRefs.add(glyph.glyphname)
 	if moreless == 0:
 		font.selection.none()
 	for glyph in glyphsWithNestedRefs:
