@@ -4,6 +4,9 @@ from numbers import Real
 from . import util
 
 
+__all__ = ["glyphHasNestedRefs", "selectGlyphsWithNestedRefs", "decomposeNestedRefs"]
+
+
 def glyphHasNestedRefs(glyph: fontforge.glyph) -> bool:
     """
     Checks if glyph has nested references
