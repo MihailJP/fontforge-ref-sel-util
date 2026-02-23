@@ -45,7 +45,7 @@ def unusedGlyphs(font: fontforge.font) -> frozenset[str]:
     unused = set([glyph.glyphname for glyph in filter(_glyphIsNotEncoded, font.glyphs())])
     unused -= _referredGlyphs(font)
     unused -= _gsubGlyphs(font)
-    unused -= {'.notdef'}
+    unused -= {'.notdef', '.null'}
     return frozenset(unused)
 
 
