@@ -59,6 +59,7 @@ jobs:
     - name: Test with pytest
       run: |
         for i in $(find /usr/local -type d -name *-packages); do export PYTHONPATH=$i:$PYTHONPATH; done
+        export LD_LIBRARY_PATH=/usr/local/lib
         pytest
     - name: Build
       run: |
