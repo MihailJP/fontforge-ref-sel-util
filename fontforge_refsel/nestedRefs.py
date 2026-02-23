@@ -44,6 +44,16 @@ def selectGlyphsWithNestedRefs(font: fontforge.font, moreless: Real = 0):
         font.selection.select(('more',) if moreless >= 0 else ('less',), glyph)
 
 
+def _setUndoLayer(undoDict: dict[str, set[int]], glyph: fontforge.glyph, layerNum: int = -1):
+    if layerNum == -1:
+        layerNum = abs(fontforge.activeLayer())  # if still -1 (guide layer) set to 1 (foreground)
+    if glyph.glyphname not in undoDict:
+        undoDict[glyph.glyphname] = set()
+    if layerNum not in undoDict[glyph.glyphname]:
+        undoDict[glyph.glyphname].add(layerNum)
+        glyph.preserveLayerAsUndo(layerNum)
+
+
 def decomposeNestedRefs(font: fontforge.font, allGlyphs: bool = False):
     """
     Decomposes nested references into simple ones
@@ -56,6 +66,7 @@ def decomposeNestedRefs(font: fontforge.font, allGlyphs: bool = False):
     :param allGlyphs: Ignores current selection and processes all glyphs
     :type allGlyphs: bool
     """
+    undoable = {}
     while True:
         nestedRefsFound = False
         for glyph in util.selectedGlyphs(font, allGlyphs):
@@ -63,13 +74,16 @@ def decomposeNestedRefs(font: fontforge.font, allGlyphs: bool = False):
             for ref in glyph.references:
                 (srcglyph, matrix, _) = ref
                 if len(font[srcglyph].references) > 0:
+                    _setUndoLayer(undoable, glyph)
                     for srcref in font[srcglyph].references:
                         decomposedRef += [(srcref[0], psMat.compose(srcref[1], matrix), False)]
                     for layerNum in range(min(glyph.layer_cnt, font[srcglyph].layer_cnt)):
-                        #  in case there are both contours and references
+                        # in case there are both contours and references
                         layer = font[srcglyph].layers[layerNum].dup()
-                        layer.transform(matrix)
-                        glyph.layers[layerNum] += layer
+                        if not layer.isEmpty():
+                            layer.transform(matrix)
+                            _setUndoLayer(undoable, glyph, layerNum)
+                            glyph.layers[layerNum] += layer
                     nestedRefsFound = True
                 else:
                     decomposedRef += [ref]
