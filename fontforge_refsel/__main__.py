@@ -25,28 +25,28 @@ def _selectUnusedGlyphsMenu(u, font):
 def fontforge_plugin_init(**kw):
     fontforge.registerMenuItem(
         callback=_selectGlyphsWithNestedRefsMenu,
-        enable=lambda x, y: True,
+        enable=None,
         context="Font",
         submenu="_Select",
         name="Glyphs with _nested references"
     )
     fontforge.registerMenuItem(
         callback=_selectGlyphsWithDistortedRefsMenu,
-        enable=lambda x, y: True,
+        enable=None,
         context="Font",
         submenu="_Select",
         name="Glyphs with _distorted references"
     )
     fontforge.registerMenuItem(
         callback=_selectUnusedGlyphsMenu,
-        enable=lambda x, y: True,
+        enable=None,
         context="Font",
         submenu="_Select",
         name="_Unused glyphs"
     )
     fontforge.registerMenuItem(
         callback=_decomposeNestedRefsMenu,
-        enable=lambda x, y: True,
+        enable=None,
         context="Font",
         name="_Decompose nested references"
     )
