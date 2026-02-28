@@ -12,7 +12,7 @@ def selectedGlyphs(font: fontforge.font, allGlyphs: bool = False):
     If no glyphs are selected, returns all glyphs.
     :type allGlyphs: bool
     """
-    if any(font.selection):
+    if (not allGlyphs) and any(font.selection):
         return font.selection.byGlyphs
     else:
         return font.glyphs()
