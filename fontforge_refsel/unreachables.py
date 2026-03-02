@@ -7,11 +7,11 @@ __all__ = ["unusedGlyphs", "selectUnusedGlyphs"]
 
 
 def _glyphIsEncodedOrDefault(glyph: fontforge.glyph) -> bool:
-    return (
-        (glyph.unicode >= 0) or
-        (glyph.altuni is not None) or
-        (glyph.glyphname == '.notdef')
-    )
+    return any([
+        glyph.unicode >= 0,
+        glyph.altuni is not None,
+        glyph.glyphname == '.notdef',
+    ])
 
 
 def _referredGlyphs(font: fontforge.font, referFrom: set[str]) -> frozenset[str]:
@@ -26,10 +26,18 @@ def _gsubGlyphs(font: fontforge.font, referFrom: set[str]) -> frozenset[str]:
     referred = set()
     for glyph in referFrom:
         for (_, lookupType, *lookupData) in font[glyph].getPosSub('*'):
-            if lookupType in ('Substitution', 'AltSubs', 'MultSubs', 'Ligature'):
+            if lookupType in ('Substitution', 'AltSubs', 'MultSubs'):
                 for ref in lookupData:
                     referred.add(ref)
-                if lookupType == 'Ligature':
+    return frozenset(referred)
+
+
+def _ligatureGlyphs(font: fontforge.font, referFrom: set[str]) -> frozenset[str]:
+    referred = set()
+    for glyph in font:
+        for (_, lookupType, *lookupData) in font[glyph].getPosSub('*'):
+            if lookupType == 'Ligature':
+                if all([(g in referFrom) for g in lookupData]):
                     referred.add(glyph)
     return frozenset(referred)
 
@@ -53,6 +61,7 @@ def unusedGlyphs(font: fontforge.font) -> frozenset[str]:
         newDelta = set()
         newDelta |= _referredGlyphs(font, delta)
         newDelta |= _gsubGlyphs(font, delta)
+        newDelta |= _ligatureGlyphs(font, used)
         used |= newDelta
         delta = newDelta - used
     unused = set(font) - used
