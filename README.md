@@ -7,6 +7,13 @@ This plugin helps finding:
 - Glyphs with distorted references and unlink references
 - Unused glyphs and remove them
 
+Required Python version is:
+
+- 3.9 to 3.11 for limited features
+  - "Select unused glyphs" menu will be disabled in this case due to
+    possible crash
+- 3.12 or later for full features
+
 Details
 -------
 
@@ -24,7 +31,7 @@ While each references can have affine transformation,
 distorted references well. Unlinking such references will be needed if
 you plan to use ttfautohint.
 
-### Unused glyphs
+### Unused glyphs (Python ≥ 3.12 only)
 
 When a glyph is expressed as unused or unreachable, such glyphs
 neither has Unicode encodings nor is referenced from another glyph or
@@ -111,12 +118,12 @@ fontforge_refsel.decomposeNestedRefs(font, False)  # selected glyphs
 fontforge_refsel.decomposeNestedRefs(font, True)   # all glyphs
 # if no glyphs are selected, processes all glyphs
 
-# Unlink distorted references
+# Unlink distorted references (Python < 3.12 may crash)
 fontforge_refsel.selectGlyphsWithDistortedRefs(font)
 font.unlinkReferences()
 font.removeOverlap()  # may or may not needed
 
-# Drop unused glyphs
+# Drop unused glyphs (Python < 3.12 may crash)
 for glyph in fontforge_refsel.unusedGlyphs(font):
     font.removeGlyph(glyph)
 ```
