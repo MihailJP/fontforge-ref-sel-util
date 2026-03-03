@@ -14,35 +14,35 @@ def _glyphIsEncodedOrDefault(glyph: fontforge.glyph) -> bool:
     ])
 
 
-def _referredGlyphs(font: fontforge.font, referFrom: set[str]) -> frozenset[str]:
+def _referredGlyphs(font: fontforge.font, referFrom: set[str]) -> set[str]:
     referred = set()
     for glyph in referFrom:
         for (ref, _, _) in font[glyph].references:
             referred.add(ref)
-    return frozenset(referred)
+    return referred
 
 
-def _gsubGlyphs(font: fontforge.font, referFrom: set[str]) -> frozenset[str]:
+def _gsubGlyphs(font: fontforge.font, referFrom: set[str]) -> set[str]:
     referred = set()
     for glyph in referFrom:
         for (_, lookupType, *lookupData) in font[glyph].getPosSub('*'):
             if lookupType in ('Substitution', 'AltSubs', 'MultSubs'):
                 for ref in lookupData:
                     referred.add(ref)
-    return frozenset(referred)
+    return referred
 
 
-def _ligatureGlyphs(font: fontforge.font, referFrom: set[str]) -> frozenset[str]:
+def _ligatureGlyphs(font: fontforge.font, referFrom: set[str]) -> set[str]:
     referred = set()
     for glyph in font:
         for (_, lookupType, *lookupData) in font[glyph].getPosSub('*'):
             if lookupType == 'Ligature':
                 if all([(g in referFrom) for g in lookupData]):
                     referred.add(glyph)
-    return frozenset(referred)
+    return referred
 
 
-def unusedGlyphs(font: fontforge.font) -> frozenset[str]:
+def unusedGlyphs(font: fontforge.font) -> set[str]:
     """
     Returns names of unused glyphs
 
@@ -53,7 +53,7 @@ def unusedGlyphs(font: fontforge.font) -> frozenset[str]:
     :param font: Fontforge font object
     :type font: fontforge.font
     :return: Names of unused glyphs
-    :rtype: frozenset[str]
+    :rtype: set[str]
     """
     used = set([glyph.glyphname for glyph in filter(_glyphIsEncodedOrDefault, font.glyphs())])
     delta = deepcopy(used)
@@ -65,7 +65,7 @@ def unusedGlyphs(font: fontforge.font) -> frozenset[str]:
         used |= newDelta
         delta = newDelta - used
     unused = set(font) - used
-    return frozenset(unused)
+    return unused
 
 
 def selectUnusedGlyphs(font: fontforge.font, moreless: Real = 0):
