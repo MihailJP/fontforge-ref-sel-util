@@ -50,6 +50,8 @@ def unusedGlyphs(font: fontforge.font) -> set[str]:
     referenced from another glyph or a GSUB table.
     Such glyphs can be dropped to reduce the file size.
 
+    **CAVEAT** This function may crash if Python < 3.12
+
     :param font: Fontforge font object
     :type font: fontforge.font
     :return: Names of unused glyphs
@@ -71,6 +73,8 @@ def unusedGlyphs(font: fontforge.font) -> set[str]:
 def selectUnusedGlyphs(font: fontforge.font, moreless: Real = 0):
     """
     Selects unused glyphs
+
+    **CAVEAT** This function may crash if Python < 3.12
 
     :param font: Fontforge font object
     :type font: fontforge.font

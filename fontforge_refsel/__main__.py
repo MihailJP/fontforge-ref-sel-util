@@ -4,6 +4,7 @@ from . import (
     distortedRefs,
     unreachables,
 )
+import sys
 
 
 def _selectGlyphsWithNestedRefsMenu(u, font):
@@ -46,7 +47,7 @@ def fontforge_plugin_init(**kw):
     )
     fontforge.registerMenuItem(
         callback=_decomposeNestedRefsMenu,
-        enable=None,
+        enable=lambda *_: sys.version_info >= (3, 12),
         context="Font",
         name="_Decompose nested references"
     )
