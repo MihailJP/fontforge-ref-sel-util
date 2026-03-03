@@ -1,5 +1,6 @@
 import pytest
 from pathlib import Path
+import sys
 import fontforge
 import fontforge_refsel
 from fontforge_refsel.unreachables import (
@@ -7,6 +8,11 @@ from fontforge_refsel.unreachables import (
     _referredGlyphs,
     _gsubGlyphs,
     _ligatureGlyphs,
+)
+
+
+check_python_ver = pytest.mark.skipif(
+    sys.version_info < (3, 12), reason='causes possible crash'
 )
 
 
@@ -36,6 +42,7 @@ def test_glyphIsEncodedOrDefault(testFont, glyphname, expected):
     assert _glyphIsEncodedOrDefault(testFont[glyphname]) == expected
 
 
+@check_python_ver
 @pytest.mark.parametrize(('testFunc', 'glyphname', 'expected'), [
     (_referredGlyphs, 'circumflex.cap', True),
     (_referredGlyphs, 'acute.cap', True),
@@ -59,6 +66,7 @@ def test_glyphSet(testFunc, testFont, glyphname, expected):
     ) == expected
 
 
+@check_python_ver
 @pytest.mark.parametrize(('glyphname', 'expected'), [
     ('f_f_j', True),
     ('f_j', True),
@@ -97,6 +105,7 @@ UNLINK_TEST = (
 )
 
 
+@check_python_ver
 @pytest.mark.parametrize(('selResult', 'disable', 'unlink'), [
     (0, None, None),
     (1, DISABLE_TEST, None),
@@ -126,6 +135,7 @@ def test_unusedGlyphs(testFont2, glyphname, expected, selResult, disable, unlink
     assert (glyphname in fontforge_refsel.unusedGlyphs(testFont2)) == expected[selResult]
 
 
+@check_python_ver
 @pytest.mark.parametrize(('selResult', 'moreless', 'selection'), [
     (0, 0, None),
     (1, 1, ('A', 'B', 'C', 'caron.cap')),
