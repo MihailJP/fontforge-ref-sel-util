@@ -52,12 +52,9 @@ def test_glyphSet(testFunc, testFont, glyphname, expected):
     assert (
         glyphname in testFunc(
             testFont,
-            set([
-                glyph.glyphname for glyph in filter(
-                    _glyphIsEncodedOrDefault,
-                    testFont.glyphs()
-                )
-            ])
+            set((
+                glyph.glyphname for glyph in testFont.glyphs() if _glyphIsEncodedOrDefault(glyph)
+            ))
         )
     ) == expected
 
@@ -75,12 +72,9 @@ def test_ligatureGlyphs(testFont2, glyphname, expected):
     assert (
         glyphname in _ligatureGlyphs(
             testFont2,
-            set([
-                glyph.glyphname for glyph in filter(
-                    _glyphIsEncodedOrDefault,
-                    testFont2.glyphs()
-                )
-            ])
+            set((
+                glyph.glyphname for glyph in testFont2.glyphs() if _glyphIsEncodedOrDefault(glyph)
+            ))
         )
     ) == expected
 
