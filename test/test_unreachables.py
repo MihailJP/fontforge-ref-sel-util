@@ -117,7 +117,7 @@ UNLINK_TEST = (
     ('C', (False, False, False)),
     ('afii10072', (False, False, True)),
     ('zero.dnom', (False, False, False)),
-    ('iogonek.dotless', (False, True, True)),
+    ('iogonek.dotless', (False, False, False)),
     ('afii10147.csl', (False, True, True)),
     ('afii10194.low', (False, True, True)),
     ('afii10194_acutecomb', (False, True, True)),

@@ -61,11 +61,16 @@ def unusedGlyphs(font: fontforge.font) -> set[str]:
     delta = deepcopy(used)
     while delta:
         newDelta = set()
-        newDelta |= _referredGlyphs(font, delta)
         newDelta |= _gsubGlyphs(font, delta)
         newDelta |= _ligatureGlyphs(font, used)
-        used |= newDelta
         delta = newDelta - used
+        used |= newDelta
+    delta = deepcopy(used)
+    while delta:
+        newDelta = set()
+        newDelta |= _referredGlyphs(font, delta)
+        delta = newDelta - used
+        used |= newDelta
     unused = set(font) - used
     return unused
 
