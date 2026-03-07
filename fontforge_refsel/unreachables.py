@@ -17,18 +17,20 @@ def _glyphIsEncodedOrDefault(glyph: fontforge.glyph) -> bool:
 def _referredGlyphs(font: fontforge.font, referFrom: set[str]) -> set[str]:
     referred = set()
     for glyph in referFrom:
-        for (ref, _, _) in font[glyph].references:
-            referred.add(ref)
+        if glyph in font:
+            for (ref, _, _) in font[glyph].references:
+                referred.add(ref)
     return referred
 
 
 def _gsubGlyphs(font: fontforge.font, referFrom: set[str]) -> set[str]:
     referred = set()
     for glyph in referFrom:
-        for (_, lookupType, *lookupData) in font[glyph].getPosSub('*'):
-            if lookupType in ('Substitution', 'AltSubs', 'MultSubs'):
-                for ref in lookupData:
-                    referred.add(ref)
+        if glyph in font:
+            for (_, lookupType, *lookupData) in font[glyph].getPosSub('*'):
+                if lookupType in ('Substitution', 'AltSubs', 'MultSubs'):
+                    for ref in lookupData:
+                        referred.add(ref)
     return referred
 
 
