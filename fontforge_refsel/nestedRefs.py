@@ -1,10 +1,9 @@
+from numbers import Real
+
 import fontforge
 import psMat
-from numbers import Real
+
 from . import util
-
-
-__all__ = ["glyphHasNestedRefs", "selectGlyphsWithNestedRefs", "decomposeNestedRefs"]
 
 
 def glyphHasNestedRefs(glyph: fontforge.glyph) -> bool:

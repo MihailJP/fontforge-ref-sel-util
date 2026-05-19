@@ -1,7 +1,9 @@
-import pytest
 from pathlib import Path
 import sys
+
 import fontforge
+import pytest
+
 import fontforge_refsel
 from fontforge_refsel.unreachables import (
     _glyphIsEncodedOrDefault,

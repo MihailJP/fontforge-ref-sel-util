@@ -1,6 +1,8 @@
-import pytest
 from pathlib import Path
+
 import fontforge
+import pytest
+
 import fontforge_refsel
 
 

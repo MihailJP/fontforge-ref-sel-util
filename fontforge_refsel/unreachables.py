@@ -1,9 +1,7 @@
-import fontforge
-from numbers import Real
 from copy import deepcopy
+from numbers import Real
 
-
-__all__ = ["unusedGlyphs", "selectUnusedGlyphs"]
+import fontforge
 
 
 def _glyphIsEncodedOrDefault(glyph: fontforge.glyph) -> bool:

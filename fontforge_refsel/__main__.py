@@ -1,10 +1,12 @@
+import sys
+
 import fontforge
+
 from . import (
     nestedRefs,
     distortedRefs,
     unreachables,
 )
-import sys
 
 
 def _selectGlyphsWithNestedRefsMenu(u, font):

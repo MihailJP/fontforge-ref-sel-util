@@ -1,8 +1,6 @@
-import fontforge
 from numbers import Real
 
-
-__all__ = ["glyphHasDistortedRefs", "selectGlyphsWithDistortedRefs"]
+import fontforge
 
 
 def glyphHasDistortedRefs(glyph: fontforge.glyph) -> bool:
