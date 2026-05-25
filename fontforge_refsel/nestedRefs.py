@@ -23,7 +23,7 @@ def glyphHasNestedRefs(glyph: fontforge.glyph) -> bool:
     return False
 
 
-def selectGlyphsWithNestedRefs(font: fontforge.font, moreless: Real = 0):
+def selectGlyphsWithNestedRefs(font: fontforge.font, moreless: Real = 0):  # type: ignore
     """
     Selects glyphs with nested references
 
@@ -40,7 +40,7 @@ def selectGlyphsWithNestedRefs(font: fontforge.font, moreless: Real = 0):
     if moreless == 0:
         font.selection.none()
     for glyph in glyphsWithNestedRefs:
-        font.selection.select(('more',) if moreless >= 0 else ('less',), glyph)
+        font.selection.select(('more',) if moreless >= 0 else ('less',), glyph)  # type: ignore
 
 
 def _setUndoLayer(undoDict: dict[str, set[int]], glyph: fontforge.glyph, layerNum: int = -1):

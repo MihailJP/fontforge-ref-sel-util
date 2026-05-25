@@ -75,7 +75,7 @@ def unusedGlyphs(font: fontforge.font) -> set[str]:
     return unused
 
 
-def selectUnusedGlyphs(font: fontforge.font, moreless: Real = 0):
+def selectUnusedGlyphs(font: fontforge.font, moreless: Real = 0):  # type: ignore
     """
     Selects unused glyphs
 
@@ -90,4 +90,4 @@ def selectUnusedGlyphs(font: fontforge.font, moreless: Real = 0):
     if moreless == 0:
         font.selection.none()
     for glyph in unusedGlyphs(font):
-        font.selection.select(('more',) if moreless >= 0 else ('less',), glyph)
+        font.selection.select(('more',) if moreless >= 0 else ('less',), glyph)  # type: ignore

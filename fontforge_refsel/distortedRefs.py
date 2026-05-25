@@ -26,7 +26,7 @@ def glyphHasDistortedRefs(glyph: fontforge.glyph) -> bool:
     return False
 
 
-def selectGlyphsWithDistortedRefs(font: fontforge.font, moreless: Real = 0):
+def selectGlyphsWithDistortedRefs(font: fontforge.font, moreless: Real = 0):  # type: ignore
     """
     Selects glyphs with distorted references
 
@@ -43,4 +43,4 @@ def selectGlyphsWithDistortedRefs(font: fontforge.font, moreless: Real = 0):
     if moreless == 0:
         font.selection.none()
     for glyph in glyphsWithDistortedRefs:
-        font.selection.select(('more',) if moreless >= 0 else ('less',), glyph)
+        font.selection.select(('more',) if moreless >= 0 else ('less',), glyph)  # type: ignore
