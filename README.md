@@ -126,4 +126,8 @@ font.removeOverlap()  # may or may not needed
 # Drop unused glyphs (Python < 3.12 may crash)
 for glyph in fontforge_refsel.unusedGlyphs(font):
     font.removeGlyph(glyph)
+
+# Check what glyph refers certain glyph
+glyph = font['foo']
+result = fontforge_refsel.whatRefers(glyph)
 ```

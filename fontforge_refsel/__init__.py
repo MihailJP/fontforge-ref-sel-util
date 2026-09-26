@@ -4,11 +4,13 @@ This plugin helps finding:
 
 - Glyphs with nested references and flatten such references
 - Glyphs with distorted references and unlink references
-- Unused glyphs and remove them (Python 3.12+)"""
+- Unused glyphs and remove them (Python 3.12+)
+- What glyph refers certain glyph"""
 
 from .distortedRefs import glyphHasDistortedRefs, selectGlyphsWithDistortedRefs
 from .nestedRefs import glyphHasNestedRefs, selectGlyphsWithNestedRefs, decomposeNestedRefs
 from .unreachables import unusedGlyphs, selectUnusedGlyphs
+from .searchRefs import whatRefers
 
 __all__ = [
     # distortedRefs
@@ -23,4 +25,7 @@ __all__ = [
     # unreachables
     "unusedGlyphs",
     "selectUnusedGlyphs",
+
+    # searchRefs
+    "whatRefers",
 ]
