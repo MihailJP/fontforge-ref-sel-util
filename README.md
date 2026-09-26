@@ -71,6 +71,9 @@ This plugin adds following items into "Tools" menu:
 - Select
   - Glyphs with nested references
   - Glyphs with distorted references
+  - Glyphs referring currently selected glyphs
+    - Direct refs only
+    - Including indirect refs
   - Unused glyphs
 - Decompose nested references
 
@@ -129,5 +132,7 @@ for glyph in fontforge_refsel.unusedGlyphs(font):
 
 # Check what glyph refers certain glyph
 glyph = font['foo']
-result = fontforge_refsel.whatRefers(glyph)
+result = fontforge_refsel.whatRefers(glyph)         # direct references only
+result = fontforge_refsel.whatRefers(glyph, False)  # direct references only
+result = fontforge_refsel.whatRefers(glyph, True)   # also indirect references
 ```

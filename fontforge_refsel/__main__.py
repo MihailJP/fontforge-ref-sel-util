@@ -28,7 +28,7 @@ def _selectUnusedGlyphsMenu(u, font):
 
 
 def _selectWhatRefers(u, font):
-    searchRefs.selectWhatRefers(font)
+    searchRefs.selectWhatRefers(font, u)
 
 
 def fontforge_plugin_init(**kw):
@@ -50,9 +50,18 @@ def fontforge_plugin_init(**kw):
     fontforge.registerMenuItem(
         callback=_selectWhatRefers,
         enable=None,
+        data=False,
         context="Font",
-        submenu=tr.get("_Select"),
-        name=tr.get("Glyphs _referring currently selected glyphs"),
+        submenu=[tr.get("_Select"), tr.get("Glyphs _referring currently selected glyphs")],
+        name=tr.get("_Direct refs only"),
+    )
+    fontforge.registerMenuItem(
+        callback=_selectWhatRefers,
+        enable=None,
+        data=True,
+        context="Font",
+        submenu=[tr.get("_Select"), tr.get("Glyphs _referring currently selected glyphs")],
+        name=tr.get("_Including indirect refs"),
     )
     fontforge.registerMenuItem(
         callback=_selectUnusedGlyphsMenu,
