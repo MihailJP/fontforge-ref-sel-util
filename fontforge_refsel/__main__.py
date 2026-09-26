@@ -7,6 +7,7 @@ from . import (
     distortedRefs,
     unreachables,
 )
+from .translation import tr, setTranslation
 
 
 def _selectGlyphsWithNestedRefsMenu(u, font):
@@ -26,30 +27,31 @@ def _selectUnusedGlyphsMenu(u, font):
 
 
 def fontforge_plugin_init(**kw):
+    setTranslation()
     fontforge.registerMenuItem(
         callback=_selectGlyphsWithNestedRefsMenu,
         enable=None,
         context="Font",
-        submenu="_Select",
-        name="Glyphs with _nested references"
+        submenu=tr.get("_Select"),
+        name=tr.get("Glyphs with _nested references"),
     )
     fontforge.registerMenuItem(
         callback=_selectGlyphsWithDistortedRefsMenu,
         enable=None,
         context="Font",
-        submenu="_Select",
-        name="Glyphs with _distorted references"
+        submenu=tr.get("_Select"),
+        name=tr.get("Glyphs with _distorted references"),
     )
     fontforge.registerMenuItem(
         callback=_selectUnusedGlyphsMenu,
         enable=None,
         context="Font",
-        submenu="_Select",
-        name="_Unused glyphs"
+        submenu=tr.get("_Select"),
+        name=tr.get("_Unused glyphs"),
     )
     fontforge.registerMenuItem(
         callback=_decomposeNestedRefsMenu,
         enable=lambda *_: sys.version_info >= (3, 12),
         context="Font",
-        name="_Decompose nested references"
+        name=tr.get("_Decompose nested references"),
     )
