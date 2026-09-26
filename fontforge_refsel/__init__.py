@@ -10,7 +10,7 @@ This plugin helps finding:
 from .distortedRefs import glyphHasDistortedRefs, selectGlyphsWithDistortedRefs
 from .nestedRefs import glyphHasNestedRefs, selectGlyphsWithNestedRefs, decomposeNestedRefs
 from .unreachables import unusedGlyphs, selectUnusedGlyphs
-from .searchRefs import whatRefers
+from .searchRefs import whatRefers, selectWhatRefers
 
 __all__ = [
     # distortedRefs
@@ -28,4 +28,5 @@ __all__ = [
 
     # searchRefs
     "whatRefers",
+    "selectWhatRefers",
 ]

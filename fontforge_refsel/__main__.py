@@ -6,6 +6,7 @@ from . import (
     nestedRefs,
     distortedRefs,
     unreachables,
+    searchRefs,
 )
 from .translation import tr, setTranslation
 
@@ -26,6 +27,10 @@ def _selectUnusedGlyphsMenu(u, font):
     unreachables.selectUnusedGlyphs(font)
 
 
+def _selectWhatRefers(u, font):
+    searchRefs.selectWhatRefers(font)
+
+
 def fontforge_plugin_init(**kw):
     setTranslation()
     fontforge.registerMenuItem(
@@ -41,6 +46,13 @@ def fontforge_plugin_init(**kw):
         context="Font",
         submenu=tr.get("_Select"),
         name=tr.get("Glyphs with _distorted references"),
+    )
+    fontforge.registerMenuItem(
+        callback=_selectWhatRefers,
+        enable=None,
+        context="Font",
+        submenu=tr.get("_Select"),
+        name=tr.get("Glyphs _referring currently selected glyphs"),
     )
     fontforge.registerMenuItem(
         callback=_selectUnusedGlyphsMenu,

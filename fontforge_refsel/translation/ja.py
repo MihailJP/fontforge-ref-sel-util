@@ -11,6 +11,7 @@ translation_ja = {
     '_Select': '選択 (_S)',
     'Glyphs with _nested references': 'ネストした参照を含むグリフ (_N)',
     'Glyphs with _distorted references': '変形した参照を含むグリフ (_D)',
+    'Glyphs _referring currently selected glyphs': '現在選択されているグリフを参照しているグリフ (_R)',
     '_Unused glyphs': '使用されていないグリフ (_U)',
     '_Decompose nested references': 'ネストした参照を分解 (_D)',
 }
