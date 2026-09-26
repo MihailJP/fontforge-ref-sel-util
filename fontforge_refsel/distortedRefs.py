@@ -20,7 +20,7 @@ def glyphHasDistortedRefs(glyph: fontforge.glyph) -> bool:
     :rtype: bool
     """
     for ref in glyph.references:
-        (srcglyph, matrix, _) = ref
+        _, matrix, _ = ref
         if matrix[:4] != (1, 0, 0, 1):
             return True
     return False

@@ -17,7 +17,7 @@ def glyphHasNestedRefs(glyph: fontforge.glyph) -> bool:
     """
     font = glyph.font
     for ref in glyph.references:
-        (srcglyph, _, _) = ref
+        srcglyph, _, _ = ref
         if len(font[srcglyph].references) > 0:
             return True
     return False
